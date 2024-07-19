@@ -6,7 +6,7 @@ from users.models import CustomUser
 #     class Meta:
 #         model = CustomUser
 #         fields = ('first_name', 'profile_photo')
-class VABSeralizers(serializers.ModelSerializerO):
+class VABSeralizers(serializers.ModelSerializer):
     class Meta:
         model = VAB
         fields = '__all__'
