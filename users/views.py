@@ -73,7 +73,7 @@ class VerifyEmailView(APIView):
 
         return Response({'detail': 'Email successfully verified'}, status=status.HTTP_200_OK)
 
-class ListGroupView(generics.ListAPIView):
+class ListGroupView(generics.ListCreateAPIView):
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
     # permission_classes = [permissions.IsAuthenticated]

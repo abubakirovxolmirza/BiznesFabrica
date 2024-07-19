@@ -23,7 +23,7 @@ class Tasks(models.Model):
     ball = models.IntegerField()
     start_time = models.DateTimeField()
     stop_time = models.DateTimeField()
-    users = models.ForeignKey('users.CustomUser', on_delete=models.CASCADE, related_name='armiya_tasks')
+    users = models.ManyToManyField('users.CustomUser', related_name='armiya_tasks')
     status = models.CharField(max_length=200, choices=STATUS_CHOICES)
     
     # def save(self, *args, **kwargs):
