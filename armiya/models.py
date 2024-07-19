@@ -18,16 +18,12 @@ class Price(models.Model):
     vabq = models.IntegerField()
     sumq = models.FloatField()
 
-from django.db import models
-
 class VAB(models.Model):
     date = models.DateTimeField()
-    value = models.FloatField()
-    history = models.JSONField(default=list)  # Ensure this is the correct JSONField
-
+    qiymat = models.FloatField()
+    history = models.JSONField()
     class Meta:
         ordering = ['-date']
-
 
 
 class Tasks(models.Model):
@@ -38,11 +34,20 @@ class Tasks(models.Model):
     ]
     name = models.CharField(max_length=250)
     definition = models.CharField(max_length=250)
-    # ball = models.IntegerField(blank=True, null=True)
     start_time = models.DateTimeField()
     stop_time = models.DateTimeField()
-    # users = models.ManyToManyField('users.CustomUser', related_name='armiya_tasks')
+    users = models.ManyToManyField('users.CustomUser', related_name='army_tasks')
     status = models.CharField(max_length=200, choices=STATUS_CHOICES)
+    ball = models.JSONField(default=dict)  # Stores user scores as a JSON object
+
+    def set_score(self, user_id, ball):
+        """Set or update the score for a specific user."""
+        self.scores[user_id] = ball
+        self.save()
+
+    def get_score(self, user_id):
+        """Get the score for a specific user."""
+        return self.scores.get(user_id, 0)
 
 
 class TaskUsers(models.Model):
