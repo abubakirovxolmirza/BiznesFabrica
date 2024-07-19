@@ -1,9 +1,11 @@
 from django.shortcuts import render
 from rest_framework.generics import ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
-from .models import Auktsion, Buyum, Tasks, HistoryBalls, Balls
-from .serializers import AuktsionSerializer, BuyumTaskssSerializer, TasksSerializer, HistoryBallsSerializer, BallsSerializer
+from .models import Auktsion, Buyum, Tasks, HistoryBalls, Balls, TaskUsers
+from .serializers import AuktsionSerializer, BuyumTaskssSerializer, TasksSerializer, HistoryBallsSerializer, BallsSerializer, TaskUsersSerializer
 from rest_framework import permissions
-
+from users.models import CustomUser
+from users.serializers import CustomUserSerializer
+from rest_framework.response import Response
 # Create your views here.
 
 
@@ -12,9 +14,39 @@ class AuktsionCreateListView(ListCreateAPIView):
     serializer_class = AuktsionSerializer
     permission_classes = [permissions.IsAuthenticated]
     
-# class HtasksCreateListView(ListCreateAPIView):
-#     queryset = Htasks.objects.all()
-#     serializer_class = HtasksSerializer
+from rest_framework.generics import ListAPIView
+from rest_framework.response import Response
+from .models import TaskUsers
+from .serializers import TaskUsersSerializer
+from users.models import CustomUser
+
+class TaskUsersListView(ListAPIView):
+    queryset = TaskUsers.objects.all()
+    serializer_class = TaskUsersSerializer
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = self.get_serializer(queryset, many=True)
+
+        # Modify serializer data to include profile_photo, first_name, last_name
+        data = serializer.data
+        for item in data:
+            # Fetch related CustomUser instances
+            users_data = item.get('users', [])
+            users = []
+            for user_id in users_data:
+                user_instance = CustomUser.objects.get(id=user_id)
+                user_data = {
+                    'id': user_instance.id,
+                    'first_name': user_instance.first_name,
+                    'profile_photo': user_instance.profile_photo.url if user_instance.profile_photo else None,
+                }
+                users.append(user_data)
+
+            item['users'] = users
+
+        return Response(data)
+
     
     
 class BuyumCreateListView(ListCreateAPIView):
@@ -51,6 +83,11 @@ class AuktsionDetailView(RetrieveUpdateDestroyAPIView):
     queryset = Auktsion.objects.all()
     serializer_class = AuktsionSerializer
     permission_classes = [permissions.IsAuthenticated]
+    
+class TaskUsersDetailView(RetrieveUpdateDestroyAPIView):
+    queryset = TaskUsers.objects.all()
+    serializer_class = TaskUsersSerializer
+    permission_classes = [permissions.IsAuthenticated]    
     
 class BuyumDetailView(RetrieveUpdateDestroyAPIView):
     queryset = Buyum.objects.all()

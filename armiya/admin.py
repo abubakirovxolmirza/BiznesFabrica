@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Auktsion, Buyum, HistoryBalls, Tasks, Balls, Yangiliklar, Talablar, Sh_rivojlanish
+from .models import Auktsion, Buyum, HistoryBalls, Tasks, Balls, Yangiliklar, Talablar, Sh_rivojlanish, TaskUsers
 # Register your models here.
 admin.site.register(Auktsion)
 admin.site.register(Buyum)
@@ -9,4 +9,4 @@ admin.site.register(Tasks)
 admin.site.register(Balls)
 admin.site.register(Talablar)
 admin.site.register(Sh_rivojlanish)
-
+admin.site.register(TaskUsers)

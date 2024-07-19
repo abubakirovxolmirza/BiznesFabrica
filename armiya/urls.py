@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import DoneTasksListView, BallsTasksCreateListView, BallsTasksDetailView, AuktsionCreateListView, AuktsionDetailView, TasksCreateListView, TasksDetailView, HistoryBallsCreateListView, HistoryBallsDetailView, BuyumCreateListView, BuyumDetailView
+from .views import TaskUsersDetailView, TaskUsersListView, DoneTasksListView, BallsTasksCreateListView, BallsTasksDetailView, AuktsionCreateListView, AuktsionDetailView, TasksCreateListView, TasksDetailView, HistoryBallsCreateListView, HistoryBallsDetailView, BuyumCreateListView, BuyumDetailView
 
 urlpatterns = [
     path('auktsion', AuktsionCreateListView.as_view()),
@@ -14,6 +14,7 @@ urlpatterns = [
     # path('htasks/<int:pk>', HistoryTasksDetailView.as_view()),
     path('buyum/<int:pk>', BuyumDetailView.as_view()),
     path('balls/<int:pk>', BallsTasksDetailView.as_view()),
-    path('task-dones', DoneTasksListView.as_view())
-    
-]
+    path('task-dones', DoneTasksListView.as_view()),
+    path('taskusers', TaskUsersListView.as_view()),
+    path('taskusers/<int:pk>', TaskUsersDetailView.as_view())
+    ]

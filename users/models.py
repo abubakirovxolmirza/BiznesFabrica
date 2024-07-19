@@ -87,6 +87,7 @@ class Group(models.Model):
 ]
     
     name = models.CharField(max_length=200, blank=True, null=True)
+    group_photo = models.ImageField()
     count = models.IntegerField(blank=True, null=True)
     admin = models.CharField(max_length=200, choices=ROLES_CHOICES, blank=True, null=True)   
     rate = models.FloatField(blank=True, null=True)
