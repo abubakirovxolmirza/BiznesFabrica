@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework.generics import ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
-from .models import Auktsion, Buyum, Tasks, HistoryBalls, Balls, TaskUsers
-from .serializers import AuktsionSerializer, BuyumTaskssSerializer, TasksSerializer, HistoryBallsSerializer, BallsSerializer, TaskUsersSerializer
+from .models import Auktsion, Buyum, Tasks, HistoryBalls, Balls, TaskUsers, VAB, Price
+from .serializers import VABSeralizers, PriceSerializers, AuktsionSerializer, BuyumTaskssSerializer, TasksSerializer, HistoryBallsSerializer, BallsSerializer, TaskUsersSerializer
 from rest_framework import permissions
 from users.models import CustomUser
 from users.serializers import CustomUserSerializer
@@ -12,6 +12,16 @@ from rest_framework.response import Response
 class AuktsionCreateListView(ListCreateAPIView):
     queryset = Auktsion.objects.all()
     serializer_class = AuktsionSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+class VABCreateListView(ListCreateAPIView):
+    queryset = VAB.objects.all()
+    serializer_class = VABSeralizers
+    permission_classes = [permissions.IsAuthenticated]
+    
+class PriceCreateListView(ListCreateAPIView):
+    queryset = Price.objects.all()
+    serializer_class = PriceSerializers
     permission_classes = [permissions.IsAuthenticated]
     
 from rest_framework.generics import ListAPIView
@@ -124,4 +134,13 @@ class DoneTasksListView(ListAPIView):
     
     def get_queryset(self):
         return Tasks.objects.filter(status='Done')
+
+class VABDetailView(RetrieveUpdateDestroyAPIView):
+    queryset = Balls.objects.all()
+    serializer_class = BallsSerializer
+    permission_classes = [permissions.IsAuthenticated]
     
+class PriceDetailView(RetrieveUpdateDestroyAPIView):
+    queryset = Price.objects.all()
+    serializer_class = PriceSerializers
+    permission_classes = [permissions.IsAuthenticated]

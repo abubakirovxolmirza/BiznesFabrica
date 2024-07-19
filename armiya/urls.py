@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import TaskUsersDetailView, TaskUsersListView, DoneTasksListView, BallsTasksCreateListView, BallsTasksDetailView, AuktsionCreateListView, AuktsionDetailView, TasksCreateListView, TasksDetailView, HistoryBallsCreateListView, HistoryBallsDetailView, BuyumCreateListView, BuyumDetailView
+from .views import VABCreateListView, VABDetailView, PriceCreateListView, PriceDetailView, TaskUsersDetailView, TaskUsersListView, DoneTasksListView, BallsTasksCreateListView, BallsTasksDetailView, AuktsionCreateListView, AuktsionDetailView, TasksCreateListView, TasksDetailView, HistoryBallsCreateListView, HistoryBallsDetailView, BuyumCreateListView, BuyumDetailView
 
 urlpatterns = [
     path('auktsion', AuktsionCreateListView.as_view()),
@@ -16,5 +16,9 @@ urlpatterns = [
     path('balls/<int:pk>', BallsTasksDetailView.as_view()),
     path('task-dones', DoneTasksListView.as_view()),
     path('taskusers', TaskUsersListView.as_view()),
-    path('taskusers/<int:pk>', TaskUsersDetailView.as_view())
+    path('taskusers/<int:pk>', TaskUsersDetailView.as_view()),
+    path('price', PriceCreateListView.as_view()),
+    path('price/<int:pk>', PriceDetailView.as_view()),
+    path('vab', VABCreateListView.as_view()),
+    path('vab/<int:pk>', VABDetailView.as_view()),
     ]

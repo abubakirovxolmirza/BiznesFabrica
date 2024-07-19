@@ -3,6 +3,7 @@ from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 # from users.models import CustomUser
 # Create your models here.
+
 from ckeditor_uploader.fields import RichTextUploadingField    
 class Yangiliklar(models.Model):
     content = RichTextUploadingField()
@@ -12,6 +13,21 @@ class Talablar(models.Model):
     
 class Sh_rivojlanish(models.Model):
     content = RichTextUploadingField()  
+
+class Price(models.Model):
+    vabq = models.IntegerField()
+    sumq = models.FloatField()
+
+from django.db import models
+
+class VAB(models.Model):
+    date = models.DateTimeField()
+    value = models.FloatField()
+    history = models.JSONField(default=list)  # Ensure this is the correct JSONField
+
+    class Meta:
+        ordering = ['-date']
+
 
 
 class Tasks(models.Model):

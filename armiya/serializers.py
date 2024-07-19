@@ -1,13 +1,21 @@
 from rest_framework import serializers
-from .models import Tasks, HistoryBalls, Buyum, Auktsion, Balls, TaskUsers
+from .models import Tasks, HistoryBalls, Buyum, Auktsion, Balls, TaskUsers, VAB, Price
 from users.models import CustomUser
 
 # class UsersTasksSerializers(serializers.ModelSerializer):
 #     class Meta:
 #         model = CustomUser
 #         fields = ('first_name', 'profile_photo')
-        
-        
+class VABSeralizers(serializers.ModelSerializerO):
+    class Meta:
+        model = VAB
+        fields = '__all__'
+
+class PriceSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Price
+        fields = '__all__'
+
 class TasksSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tasks
