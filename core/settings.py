@@ -26,7 +26,11 @@ SECRET_KEY = 'django-insecure--&uh0uu53v75ivw!j_qr@-zijn)b=xxm6_w-^awpun_^rd!c^_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 # ALLOWED_HOSTS = []
+<<<<<<< HEAD
 ALLOWED_HOSTS = ['localhost', "biznes-armiya-api.uz", '*']
+=======
+ALLOWED_HOSTS = ['localhost', "biznes-armiya-api.uz", "biznes-armiya.uz",'*']
+>>>>>>> origin/main
 
 
 # Application definition
@@ -181,11 +185,15 @@ AUTH_USER_MODEL = 'users.CustomUser'
 CORS_ALLOW_ALL_ORIGINS = False  # Установим False, чтобы указать конкретные домены
 
 CORS_ALLOWED_ORIGINS = [
+<<<<<<< HEAD
     "http://biznes-armiya.uz",
     "https://biznes-armiya.uz",
     "http://localhost:3000",
     "http://localhost:3001",
     "http://localhost:3002",
+=======
+    "https://biznes-armiya.uz",  # Укажите ваш фронтенд домен
+>>>>>>> origin/main
 ]
 
 CORS_ALLOW_METHODS = [
@@ -201,6 +209,14 @@ CORS_ALLOW_HEADERS = [
     "Authorization",
     "Content-Type",
     "X-CSRFToken",
+<<<<<<< HEAD
+=======
+]
+
+# Опционально: указание заголовков, которые нужно вернуть в ответе на запросы
+CORS_EXPOSE_HEADERS = [
+    'Access-Control-Allow-Origin',
+>>>>>>> origin/main
 ]
 
 # Опционально: указание заголовков, которые нужно вернуть в ответе на запросы
