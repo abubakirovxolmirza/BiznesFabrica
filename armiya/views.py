@@ -1,13 +1,28 @@
 from django.shortcuts import render
 from rest_framework.generics import ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
-from .models import Auktsion, Buyum, Tasks, HistoryBalls, Balls, TaskUsers, VAB, Price
-from .serializers import VABSeralizers, PriceSerializers, AuktsionSerializer, BuyumTaskssSerializer, TasksSerializer, HistoryBallsSerializer, BallsSerializer, TaskUsersSerializer
+from .models import Auktsion, Buyum, Tasks, HistoryBalls, Balls, TaskUsers, VAB, Price, Sh_rivojlanish, Talablar, Yangiliklar
+from .serializers import VABSeralizers, PriceSerializers, AuktsionSerializer, BuyumTaskssSerializer, TasksSerializer, HistoryBallsSerializer, BallsSerializer, TaskUsersSerializer, YangiliklarSeralizers, TalablarSeralizers, ShRSeralizers
 from rest_framework import permissions
 from users.models import CustomUser
 from users.serializers import CustomUserSerializer
 from rest_framework.response import Response
 # Create your views here.
 
+
+class TalablarCreateListView(ListCreateAPIView):
+    queryset = Talablar.objects.all()
+    serializer_class = TalablarSeralizers
+    permission_classes = [permissions.IsAuthenticated]
+
+class YangiliklarCreateListView(ListCreateAPIView):
+    queryset = Yangiliklar.objects.all()
+    serializer_class = YangiliklarSeralizers
+    permission_classes = [permissions.IsAuthenticated]
+
+class ShRCreateListView(ListCreateAPIView):
+    queryset =Sh_rivojlanish .objects.all()
+    serializer_class = ShRSeralizers
+    permission_classes = [permissions.IsAuthenticated]
 
 class AuktsionCreateListView(ListCreateAPIView):
     queryset = Auktsion.objects.all()
@@ -143,4 +158,21 @@ class VABDetailView(RetrieveUpdateDestroyAPIView):
 class PriceDetailView(RetrieveUpdateDestroyAPIView):
     queryset = Price.objects.all()
     serializer_class = PriceSerializers
+    permission_classes = [permissions.IsAuthenticated]
+
+class YangiliklarDetailView(RetrieveUpdateDestroyAPIView):
+    queryset = Yangiliklar.objects.all()
+    serializer_class = YangiliklarSeralizers
+    permission_classes = [permissions.IsAuthenticated]
+
+
+class TalablarDetailView(RetrieveUpdateDestroyAPIView):
+    queryset = Talablar.objects.all()
+    serializer_class = TalablarSeralizers
+    permission_classes = [permissions.IsAuthenticated]
+
+
+class ShRDetailView(RetrieveUpdateDestroyAPIView):
+    queryset = Sh_rivojlanish.objects.all()
+    serializer_class = ShRSeralizers
     permission_classes = [permissions.IsAuthenticated]

@@ -43,7 +43,7 @@ class CustomUser(AbstractUser):
         ('Serjant', 'Serjant'),
         ('Kursant', 'Kursant'),
         ('Saldat', 'Saldat'),
-
+        ('Bank', 'Bank'),
     ]
     username = None
     profile_photo = models.ImageField(blank=True, null=True)
@@ -94,7 +94,7 @@ class Group(models.Model):
     shiori = models.CharField(max_length=200, blank=True, null=True)
     users = models.ManyToManyField('CustomUser', blank=True, null=True)     
     generate_code = models.CharField(max_length=10, null=True, blank=True)
-        
+    start_time = models.DateTimeField(auto_now_add=True)   
 
 # models.py
 

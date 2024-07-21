@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import VABCreateListView, VABDetailView, PriceCreateListView, PriceDetailView, TaskUsersDetailView, TaskUsersListView, DoneTasksListView, BallsTasksCreateListView, BallsTasksDetailView, AuktsionCreateListView, AuktsionDetailView, TasksCreateListView, TasksDetailView, HistoryBallsCreateListView, HistoryBallsDetailView, BuyumCreateListView, BuyumDetailView
+from .views import ShRCreateListView, YangiliklarCreateListView, TalablarCreateListView, VABCreateListView, VABDetailView, PriceCreateListView, PriceDetailView, TaskUsersDetailView, TaskUsersListView, DoneTasksListView, BallsTasksCreateListView, BallsTasksDetailView, AuktsionCreateListView, AuktsionDetailView, TasksCreateListView, TasksDetailView, HistoryBallsCreateListView, HistoryBallsDetailView, BuyumCreateListView, BuyumDetailView, ShRDetailView, YangiliklarDetailView, TalablarDetailView
 
 urlpatterns = [
     path('auktsion', AuktsionCreateListView.as_view()),
@@ -21,4 +21,10 @@ urlpatterns = [
     path('price/<int:pk>', PriceDetailView.as_view()),
     path('vab', VABCreateListView.as_view()),
     path('vab/<int:pk>', VABDetailView.as_view()),
+    path('ShRivoj',ShRCreateListView .as_view()),
+    path('yangiliklar', YangiliklarCreateListView.as_view()),
+    path('talablar', TalablarCreateListView.as_view()),
+    path('Shrivoj/<int:pk>', ShRDetailView.as_view()),
+    path('yangiliklar/<int:pk>', YangiliklarDetailView.as_view()),
+    path('talablar/<int:pk>', TalablarDetailView.as_view()),
     ]

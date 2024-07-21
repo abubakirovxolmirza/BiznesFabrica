@@ -9,8 +9,11 @@ class Yangiliklar(models.Model):
     content = RichTextUploadingField()
     
 class Talablar(models.Model):
+    create_date = models.DateTimeField(auto_now_add=True)
+    mavzu = models.CharField(max_length=255)
     content = RichTextUploadingField()
-    
+    user_id = models.ForeignKey('users.CustomUser', on_delete=models.CASCADE)
+
 class Sh_rivojlanish(models.Model):
     content = RichTextUploadingField()  
 
@@ -36,9 +39,10 @@ class Tasks(models.Model):
     definition = models.CharField(max_length=250)
     start_time = models.DateTimeField()
     stop_time = models.DateTimeField()
-    users = models.ManyToManyField('users.CustomUser', related_name='army_tasks')
+    #users = models.ManyToManyField('users.CustomUser', related_name='army_tasks')
     status = models.CharField(max_length=200, choices=STATUS_CHOICES)
-    ball = models.JSONField(default=dict)  # Stores user scores as a JSON object
+    #ball = models.JSONField(default=dict)  # Stores user scores as a JSON object
+    user = models.JSONField(default=list)
 
     def set_score(self, user_id, ball):
         """Set or update the score for a specific user."""

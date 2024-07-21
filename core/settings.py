@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure--&uh0uu53v75ivw!j_qr@-zijn)b=xxm6_w-^awpun_^rd!c^_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 # ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ['13.51.161.74']
+ALLOWED_HOSTS = ['localhost', "biznes-armiya-api.uz", '*']
 
 
 # Application definition
@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'drf_spectacular',
     'ckeditor',
+    'chat',
 ]
 # ASGI_APPLICATION = 'core.asgi.application'
 
@@ -59,10 +60,10 @@ INSTALLED_APPS = [
 # }
 
 MIDDLEWARE = [
-    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.security.SecurityMiddleware',
     "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -177,39 +178,40 @@ CKEDITOR_CONFIGS = {
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'users.CustomUser'
-CORS_ALLOW_METHODS = [
-    "DELETE",
-    "GET",
-    "OPTIONS",
-    "POST",
-    "PUT",
-]
+CORS_ALLOW_ALL_ORIGINS = False  # Установим False, чтобы указать конкретные домены
 
 CORS_ALLOWED_ORIGINS = [
-    "http://13.60.80.160:8000",
-    "http://prof-arent.s3-website.eu-north-1.amazonaws.com",
+    "http://biznes-armiya.uz",
+    "https://biznes-armiya.uz",
     "http://localhost:3000",
     "http://localhost:3001",
     "http://localhost:3002",
 ]
 
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_METHODS = [
+    "GET",
+    "POST",
+    "PUT",
+    "PATCH",
+    "DELETE",
+    "OPTIONS",
+]
 
 CORS_ALLOW_HEADERS = [
-    'accept',
-    'accept-encoding',
-    'authorization',
-    'content-type',
-    'dnt',
-    'origin',
-    'user-agent',
-    'x-csrftoken',
-    'x-requested-with',
+    "Authorization",
+    "Content-Type",
+    "X-CSRFToken",
 ]
-EMAIL_BACKEND ='django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'abubakirovxolmirza0428@gmail.com'
-EMAIL_HOST_PASSWORD = 'vtqhaguuzzkqqkoe'
-EMAIL_USE_TLS = True
-EMAIL_USE_SSL = False
+
+# Опционально: указание заголовков, которые нужно вернуть в ответе на запросы
+CORS_EXPOSE_HEADERS = [
+    'Access-Control-Allow-Origin',
+]
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'server2.ahost.uz'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'info@biznes-armiya.uz'
+EMAIL_HOST_PASSWORD = 'AS2zzCfKCCHMG9n'
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+

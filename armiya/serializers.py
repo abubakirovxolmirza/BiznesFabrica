@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Tasks, HistoryBalls, Buyum, Auktsion, Balls, TaskUsers, VAB, Price
+from .models import Tasks, HistoryBalls, Buyum, Auktsion, Balls, TaskUsers, VAB, Price, Yangiliklar, Talablar, Sh_rivojlanish
 from users.models import CustomUser
 
 # class UsersTasksSerializers(serializers.ModelSerializer):
@@ -9,6 +9,21 @@ from users.models import CustomUser
 class VABSeralizers(serializers.ModelSerializer):
     class Meta:
         model = VAB
+        fields = '__all__'
+
+class YangiliklarSeralizers(serializers.ModelSerializer):
+    class Meta:
+        model = Yangiliklar
+        fields = '__all__'
+
+class TalablarSeralizers(serializers.ModelSerializer):
+    class Meta:
+        model = Talablar
+        fields = '__all__'
+
+class ShRSeralizers(serializers.ModelSerializer):
+    class Meta:
+        model = Sh_rivojlanish
         fields = '__all__'
 
 class PriceSerializers(serializers.ModelSerializer):

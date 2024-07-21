@@ -24,6 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('armiya.urls')),
     path('api/', include('users.urls')),
+    path('api/', include('chat.urls')),
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     path('api/swagger/', SpectacularSwaggerView.as_view(url_name='schema')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
