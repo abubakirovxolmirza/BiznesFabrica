@@ -26,11 +26,10 @@ SECRET_KEY = 'django-insecure--&uh0uu53v75ivw!j_qr@-zijn)b=xxm6_w-^awpun_^rd!c^_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 # ALLOWED_HOSTS = []
-<<<<<<< HEAD
-ALLOWED_HOSTS = ['localhost', "biznes-armiya-api.uz", '*']
-=======
+#ALLOWED_HOSTS = ['localhost', "biznes-armiya-api.uz", '*']
+
 ALLOWED_HOSTS = ['localhost', "biznes-armiya-api.uz", "biznes-armiya.uz",'*']
->>>>>>> origin/main
+
 
 
 # Application definition
@@ -41,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    "whitenoise.runserver_nostatic",
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework_simplejwt',
@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'drf_spectacular',
     'ckeditor',
     'chat',
+    'storages',
 ]
 # ASGI_APPLICATION = 'core.asgi.application'
 
@@ -64,9 +65,11 @@ INSTALLED_APPS = [
 # }
 
 MIDDLEWARE = [
+    
     'django.middleware.security.SecurityMiddleware',
-    "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+    'django.middleware.csrf.CsrfViewMiddleware',
     "corsheaders.middleware.CorsMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -156,13 +159,15 @@ USE_I18N = True
 
 USE_TZ = True
 
-
+import os
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.0/howto/static-files/
-STATIC_ROOT = BASE_DIR / "staticfiles"
-STATIC_URL = 'static/'
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+# https://docsos.path.join(BASE_DIR, 'staticfiles')
+#STATIC_URL = '/static/'
+#STATIC_ROOT = BASE_DIR / 'static'
+#STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+# Media files (Uploaded content)
+MEDIA_URL = 'https://biznes-armiya-api.uz/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # CKEditor Settings
 CKEDITOR_UPLOAD_PATH = 'uploads/'
 CKEDITOR_IMAGE_BACKEND = "pillow"
@@ -185,15 +190,12 @@ AUTH_USER_MODEL = 'users.CustomUser'
 CORS_ALLOW_ALL_ORIGINS = False  # Установим False, чтобы указать конкретные домены
 
 CORS_ALLOWED_ORIGINS = [
-<<<<<<< HEAD
     "http://biznes-armiya.uz",
     "https://biznes-armiya.uz",
     "http://localhost:3000",
     "http://localhost:3001",
     "http://localhost:3002",
-=======
     "https://biznes-armiya.uz",  # Укажите ваш фронтенд домен
->>>>>>> origin/main
 ]
 
 CORS_ALLOW_METHODS = [
@@ -209,14 +211,15 @@ CORS_ALLOW_HEADERS = [
     "Authorization",
     "Content-Type",
     "X-CSRFToken",
-<<<<<<< HEAD
-=======
 ]
 
 # Опционально: указание заголовков, которые нужно вернуть в ответе на запросы
 CORS_EXPOSE_HEADERS = [
     'Access-Control-Allow-Origin',
->>>>>>> origin/main
+]
+CSRF_TRUSTED_ORIGINS = [
+    'https://biznes-armiya-api.uz',
+    'https://www.biznes-armiya-api.uz',
 ]
 
 # Опционально: указание заголовков, которые нужно вернуть в ответе на запросы
@@ -224,10 +227,26 @@ CORS_EXPOSE_HEADERS = [
     'Access-Control-Allow-Origin',
 ]
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'server2.ahost.uz'
-EMAIL_PORT = 465
+EMAIL_HOST = 'server2.ahost.uz'  # Example: 'smtp.ahost.com'
+EMAIL_PORT = 587       # Example: 587 or 465
+EMAIL_USE_TLS = True                     # Use TLS if required (typically port 587)
+EMAIL_USE_SSL = False                    # Use SSL if required (typically port 465)
 EMAIL_HOST_USER = 'info@biznes-armiya.uz'
 EMAIL_HOST_PASSWORD = 'AS2zzCfKCCHMG9n'
-EMAIL_USE_TLS = False
-EMAIL_USE_SSL = True
+DEFAULT_FROM_EMAIL = 'info@biznes-armiya.uz'
 
+
+AWS_ACCESS_KEY_ID = 'AKIAZI2LBVN3DPDGF2XU'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'biznesbucket'
+AWS_S3_SIGNATURE_NAME = 's3v4',
+AWS_S3_REGION_NAME = 'eu-north-1'
+AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+S3_STATIC_DIR = 'static'
+STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{S3_STATIC_DIR}/'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATICFILES_DIR = [BASE_DIR / 'static',]
+AWS_S3_FILE_OVERWRITE = True
+AWS_DEFAULT_ACL =  None
+AWS_S3_VERITY = True
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'

@@ -91,11 +91,11 @@ class Buyum(models.Model):
     ekb_name = models.CharField(max_length=200)
     ekb = models.IntegerField()
     boshlangich_narx = models.CharField(max_length=250)
-    
+    img = models.ImageField()
     
 class Auktsion(models.Model):
     name = models.CharField(max_length=250)
     kuni = models.DateField()
     yutganlar = models.CharField(max_length=100)
-    buyumlar = models.ForeignKey(Buyum, on_delete=models.CASCADE)
+    buyumlar = models.ManyToManyField(Buyum)
 

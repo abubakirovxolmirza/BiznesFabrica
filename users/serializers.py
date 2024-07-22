@@ -4,9 +4,14 @@ from django.contrib.auth import authenticate
 from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import CustomUser, EmailVerification, Group
-  
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.image import MIMEImage
+import smtplib
+import email.utils
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
+import uuid  # Import uuid module
 
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -16,9 +21,9 @@ import smtplib
 class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ('id', 'email', 'first_name', 'last_name', 'profile_photo', 'phone_number', 'age', 'vab', 'tasks', 'rating', 'status', 'role', 'group_id', 'permission', 'history_tasks', 'history_balls', 'password')
+        fields = ('id', 'email', 'first_name', 'last_name', 'profile_photo', 'phone_number', 'age', 'vab', 'tasks', 'reyting', 'status', 'role', 'group_id', 'permission', 'history_tasks', 'history_balls', 'password')
         extra_kwargs = {'password': {'write_only': True}}
-
+    
     def create(self, validated_data):
         user = CustomUser.objects.create_user(**validated_data)
 
@@ -46,6 +51,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
         msg['From'] = sender_email
         msg['To'] = receiver_email
         msg['Subject'] = subject
+        msg['Message-ID'] = f"<{uuid.uuid4()}@biznes-armiya.uz>"
 
         # HTML part
         html = f"""
@@ -139,8 +145,6 @@ class CustomUserSerializer(serializers.ModelSerializer):
         with smtplib.SMTP_SSL(smtp_server, smtp_port) as server:
             server.login(smtp_username, smtp_password)
             server.sendmail(sender_email, receiver_email, msg.as_string())
-
-
 class CustomTokenObtainPairSerializer(serializers.Serializer):
     email = serializers.EmailField()
     password = serializers.CharField(write_only=True)
