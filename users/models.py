@@ -26,6 +26,11 @@ class CustomUserManager(BaseUserManager):
 
         return self.create_user(email, password, **extra_fields)
 
+class RoleUser(models.Model):
+    role = models.CharField(max_length=150)
+    views = models.BooleanField(default=False)
+    edit = models.BooleanField(default=False)
+    delete = models.BooleanField(default=False)
 
 
 class CustomUser(AbstractUser):
@@ -54,7 +59,7 @@ class CustomUser(AbstractUser):
     tasks = models.ForeignKey(Tasks, on_delete=models.CASCADE, blank=True, null=True)
     reyting = models.FloatField(blank=True, null=True)
     status = models.CharField(max_length=50, choices=STATUS_CHOICES, blank=True, null=True)
-    role = models.CharField(max_length=50, choices=ROLES_CHOICES, blank=True, null=True, default="Saldat")
+    role = models.ForeignKey(RoleUser, on_delete=models.CASCADE, blank=True, null=True)
     group_id = models.ForeignKey('Group', on_delete=models.CASCADE, blank=True, null=True)
     permission = models.CharField(max_length=70, blank=True, null=True)
     history_tasks = models.CharField(max_length=50, blank=True, null=True)
@@ -73,7 +78,7 @@ class CustomUser(AbstractUser):
     
     def get_user_id(self):
         return self.id
-        
+
 class Group(models.Model):
     ROLES_CHOICES = [
     ('General', 'General'),

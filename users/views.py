@@ -3,8 +3,8 @@ from rest_framework import generics
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.authtoken.views import ObtainAuthToken
-from .serializers import CustomUserSerializer, GroupSerializer
-from .models import CustomUser, Group, EmailVerification, GrCode, CheckGr
+from .serializers import CustomUserSerializer, GroupSerializer, RoleUserSerializer
+from .models import CustomUser, Group, EmailVerification, GrCode, CheckGr, RoleUser
 from rest_framework import permissions
 from .token import get_tokens_for_user
 from rest_framework.views import APIView
@@ -84,6 +84,16 @@ class GroupDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = GroupSerializer
     # permission_classes = [permissions.IsAuthenticated]
     
+class ListRoleUserView(generics.ListCreateAPIView):
+    queryset = RoleUser.objects.all()
+    serializer_class = RoleUserSerializer
+    # permission_classes = [permissions.IsAuthenticated]
+
+
+class RoleUserDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = RoleUser.objects.all()
+    serializer_class = RoleUserSerializer
+    # permission_classes = [permissions.IsAuthenticated]
 
 # views.py
 

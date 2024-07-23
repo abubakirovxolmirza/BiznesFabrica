@@ -3,7 +3,7 @@ from .models import CustomUser
 from django.contrib.auth import authenticate
 from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
-from .models import CustomUser, EmailVerification, Group
+from .models import CustomUser, EmailVerification, Group, RoleUser
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
@@ -115,13 +115,15 @@ class CustomUserSerializer(serializers.ModelSerializer):
                     <img src="cid:email_image" alt="Email Verification">
                 </div>
                 <div class="content">
-                    <h1>Hello!</h1>
-                    <p>Verification code for your online form:</p>
+                    <h1>Salom!</h1>
+                    <p>Onlayn formangiz uchun tasdiqlash kodi:</p>
                     <div class="code">{code}</div>
-                    <p>All you need to do is copy the verification code and paste it into your form to complete the email verification process.</p>
+                    <p>Barcha qilishingiz kerak bo'lgan narsa tasdiqlash kodini nusxalash va
+          uni elektron pochta tasdiqlash jarayonini yakunlash uchun formangizga
+          joylashtirish.</p>
                 </div>
                 <div class="footer">
-                    <p>&copy; 2024 business-armiya.uz. All rights reserved.</p>
+                    <p>&copy; 2024 biznes-armiya.uz. Barcha huquqlar himoyalangan.</p>
                 </div>
             </div>
         </body>
@@ -169,6 +171,12 @@ class CustomTokenObtainPairSerializer(serializers.Serializer):
 class GroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = Group
+        fields = '__all__'
+
+
+class RoleUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RoleUser
         fields = '__all__'
         
 # serializers.py

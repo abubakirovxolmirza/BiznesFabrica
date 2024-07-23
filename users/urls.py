@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import GrCodeCreateView, CheckGrView, RegisterUserView, ListUsersView, CustomUserDetailView, CustomTokenObtainPairView, VerifyEmailView, ListGroupView, GroupDetailView
+from .views import GrCodeCreateView, CheckGrView, RegisterUserView, ListUsersView, CustomUserDetailView, CustomTokenObtainPairView, VerifyEmailView, ListGroupView, GroupDetailView, ListRoleUserView, RoleUserDetailView
 
 urlpatterns = [
     path('register', RegisterUserView.as_view()),
@@ -11,4 +11,6 @@ urlpatterns = [
     path('group/<int:pk>', GroupDetailView.as_view()),
     path('create-gr-code/', GrCodeCreateView.as_view(), name='create-gr-code'),
     path('check-gr/', CheckGrView.as_view(), name='check-gr'),
+    path('role', ListRoleUserView.as_view()),
+    path('role/<int:pk>', RoleUserDetailView.as_view()),
 ]
