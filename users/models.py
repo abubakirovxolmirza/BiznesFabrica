@@ -64,7 +64,9 @@ class RoleUser(models.Model):
     chat_views = models.BooleanField(default=False)
     chat_edit = models.BooleanField(default=False)
     chat_delete = models.BooleanField(default=False)
-
+    role_views = models.BooleanField(default=False)
+    role_edit = models.BooleanField(default=False)
+    role_delete = models.BooleanField(default=False)
 
 class CustomUser(AbstractUser):
     STATUS_CHOICES = [
