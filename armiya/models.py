@@ -7,7 +7,9 @@ from channels.layers import get_channel_layer
 from ckeditor_uploader.fields import RichTextUploadingField    
 class Yangiliklar(models.Model):
     content = RichTextUploadingField()
-    
+    user_id = models.JSONField(default=list)
+    title = models.TextField()
+
 class Talablar(models.Model):
     create_date = models.DateTimeField(auto_now_add=True)
     mavzu = models.CharField(max_length=255)

@@ -7,6 +7,29 @@ from .models import Notification
 from armiya.models import Yangiliklar, Talablar, Sh_rivojlanish, Price, VAB, Tasks, TaskUsers, Balls, HistoryBalls, Buyum, Auktsion
 from .middleware import CurrentUserMiddleware
 
+def send_notification(action, instance):
+    user = CurrentUserMiddleware.get_current_user()
+    user_id = user.id if user else None
+    user_message = f'{user_id}' if user_id else ' by an unknown user'
+
+    Notification.objects.create(
+        user=user,
+        message=f'{instance.__class__.__name__} was {action}',
+        user_id=user_id
+    )
+
+    # Sending notification to WebSocket
+    channel_layer = get_channel_layer()
+    if channel_layer:
+        async_to_sync(channel_layer.group_send)(
+            "notifications",
+            {
+                "type": "notify",
+                "message": f'{instance.__class__.__name__} was {action}',
+                "user_id": user_message
+            }
+        )
+
 @receiver(post_save, sender=Yangiliklar)
 @receiver(post_save, sender=Talablar)
 @receiver(post_save, sender=Sh_rivojlanish)
@@ -20,27 +43,7 @@ from .middleware import CurrentUserMiddleware
 @receiver(post_save, sender=Auktsion)
 def create_update_notification(sender, instance, created, **kwargs):
     action = 'created' if created else 'updated'
-    user = CurrentUserMiddleware.get_current_user()
-    user_id = user.id if user else None
-    user_message = f'{user_id}' if user_id else ' by an unknown user'
-
-    Notification.objects.create(
-        user=user,
-        message=f'{sender.__name__} was {action}',
-        user_id = f'{user_message}'
-    )
-
-    # Sending notification to WebSocket
-    channel_layer = get_channel_layer()
-    if channel_layer:
-        async_to_sync(channel_layer.group_send)(
-            "notifications",
-            {
-                "type": "notify",
-                "message": f'{sender.__name__} was {action}',
-                user_id: f'{user_message}'
-            }
-        )
+    send_notification(action, instance)
 
 @receiver(post_delete, sender=Yangiliklar)
 @receiver(post_delete, sender=Talablar)
@@ -54,24 +57,5 @@ def create_update_notification(sender, instance, created, **kwargs):
 @receiver(post_delete, sender=Buyum)
 @receiver(post_delete, sender=Auktsion)
 def delete_notification(sender, instance, **kwargs):
-    user = CurrentUserMiddleware.get_current_user()
-    user_id = user.id if user else None
-    user_message = f'{user_id}' if user_id else ' by an unknown user'
-
-    Notification.objects.create(
-        user=user,
-        message=f'{sender.__name__} was deleted',
-        user_id = f'{user_message}'
-    )
-
-    # Sending notification to WebSocket
-    channel_layer = get_channel_layer()
-    if channel_layer:
-        async_to_sync(channel_layer.group_send)(
-            "notifications",
-            {
-                "type": "notify",
-                "message": f'{sender.__name__} was deleted',
-                "user_id": f'{user_message}'
-            }
-        )
+    action = 'deleted'
+    send_notification(action, instance)

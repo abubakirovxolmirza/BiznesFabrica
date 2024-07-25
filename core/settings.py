@@ -32,9 +32,11 @@ ALLOWED_HOSTS = ['localhost', "biznes-armiya-api.uz", "biznes-armiya.uz",'*']
 
 
 
+
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -237,7 +239,8 @@ EMAIL_HOST_USER = 'info@biznes-armiya.uz'
 EMAIL_HOST_PASSWORD = 'AS2zzCfKCCHMG9n'
 DEFAULT_FROM_EMAIL = 'info@biznes-armiya.uz'
 
-
+AWS_ACCESS_KEY_ID = 'AKIAZI2LBVN3DPDGF2XU'
+AWS_SECRET_ACCESS_KEY = '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'
 AWS_STORAGE_BUCKET_NAME = 'biznesbucket'
 AWS_S3_SIGNATURE_NAME = 's3v4',
 AWS_S3_REGION_NAME = 'eu-north-1'
