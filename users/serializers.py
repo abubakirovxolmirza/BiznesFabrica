@@ -164,7 +164,7 @@ class CustomTokenObtainPairSerializer(serializers.Serializer):
         return {
             'refresh': str(refresh),
             'access': str(refresh.access_token),
-            'role': user.get_role(),
+            'role': user.role.id,
             'user_id': user.id,
         }
         

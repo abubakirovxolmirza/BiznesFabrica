@@ -10,6 +10,11 @@ class Yangiliklar(models.Model):
     user_id = models.JSONField(default=list)
     title = models.TextField()
 
+class Tranzaksiya(models.Model):
+    from_user = models.ForeignKey('users.CustomUser', on_delete=models.CASCADE, related_name='fromuser')
+    to_user = models.ForeignKey('users.CustomUser', on_delete=models.CASCADE, related_name='touser')
+    vab = models.FloatField()
+
 class Talablar(models.Model):
     create_date = models.DateTimeField(auto_now_add=True)
     mavzu = models.CharField(max_length=255)
@@ -90,14 +95,19 @@ class Buyum(models.Model):
     name = models.CharField(max_length=250)
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
-    ekb_name = models.CharField(max_length=200)
-    ekb = models.IntegerField()
+    ekb_name = models.CharField(max_length=200, blank=True, null=True)
+    ekb = models.IntegerField(blank=True, null=True)
     boshlangich_narx = models.CharField(max_length=250)
     img = models.ImageField()
-    
+    buyumusers = models.ForeignKey('BuyumUsers', on_delete=models.CASCADE, blank=True, null=True)
+
 class Auktsion(models.Model):
     name = models.CharField(max_length=250)
-    kuni = models.DateField()
-    yutganlar = models.CharField(max_length=100)
+    kuni = models.DateTimeField()
+    yutganlar = models.CharField(max_length=100, blank=True, null=True)
     buyumlar = models.ManyToManyField(Buyum)
 
+
+class BuyumUsers(models.Model):
+    user_id = models.ForeignKey('users.CustomUser', on_delete=models.CASCADE)
+    vab = models.IntegerField(blank=True, null=True)

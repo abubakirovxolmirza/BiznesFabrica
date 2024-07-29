@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework.generics import ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
-from .models import Auktsion, Buyum, Tasks, HistoryBalls, Balls, TaskUsers, VAB, Price, Sh_rivojlanish, Talablar, Yangiliklar
-from .serializers import VABSeralizers, PriceSerializers, AuktsionSerializer, BuyumTaskssSerializer, TasksSerializer, HistoryBallsSerializer, BallsSerializer, TaskUsersSerializer, YangiliklarSeralizers, TalablarSeralizers, ShRSeralizers
+from .models import Auktsion, Buyum, Tasks, HistoryBalls, Balls, TaskUsers, VAB, Price, Sh_rivojlanish, Talablar, Yangiliklar, BuyumUsers, Tranzaksiya
+from .serializers import VABSeralizers, PriceSerializers, AuktsionSerializer, BuyumTaskssSerializer, TasksSerializer, HistoryBallsSerializer, TranSerializer, BallsSerializer, TaskUsersSerializer, YangiliklarSeralizers, TalablarSeralizers, ShRSeralizers, BuyumUsersSerializer
 from rest_framework import permissions
 from users.models import CustomUser
 from users.serializers import CustomUserSerializer
@@ -12,6 +12,17 @@ from rest_framework.response import Response
 class TalablarCreateListView(ListCreateAPIView):
     queryset = Talablar.objects.all()
     serializer_class = TalablarSeralizers
+    permission_classes = [permissions.IsAuthenticated]
+
+class TranCreateListView(ListCreateAPIView):
+    queryset = Tranzaksiya.objects.all()
+    serializer_class = TranSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
+class BuyumUsersCreateListView(ListCreateAPIView):
+    queryset = BuyumUsers.objects.all()
+    serializer_class = BuyumUsersSerializer
     permission_classes = [permissions.IsAuthenticated]
 
 class YangiliklarCreateListView(ListCreateAPIView):
@@ -175,4 +186,15 @@ class TalablarDetailView(RetrieveUpdateDestroyAPIView):
 class ShRDetailView(RetrieveUpdateDestroyAPIView):
     queryset = Sh_rivojlanish.objects.all()
     serializer_class = ShRSeralizers
+    permission_classes = [permissions.IsAuthenticated]
+
+
+class BuyumUsersDetailView(RetrieveUpdateDestroyAPIView):
+    queryset = BuyumUsers.objects.all()
+    serializer_class = BuyumUsersSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+class TranDetailView(RetrieveUpdateDestroyAPIView):
+    queryset = Tranzaksiya.objects.all()
+    serializer_class = TranSerializer
     permission_classes = [permissions.IsAuthenticated]

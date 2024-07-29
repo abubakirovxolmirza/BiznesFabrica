@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import ShRCreateListView, YangiliklarCreateListView, TalablarCreateListView, VABCreateListView, VABDetailView, PriceCreateListView, PriceDetailView, TaskUsersDetailView, TaskUsersListView, DoneTasksListView, BallsTasksCreateListView, BallsTasksDetailView, AuktsionCreateListView, AuktsionDetailView, TasksCreateListView, TasksDetailView, HistoryBallsCreateListView, HistoryBallsDetailView, BuyumCreateListView, BuyumDetailView, ShRDetailView, YangiliklarDetailView, TalablarDetailView
+from .views import TranCreateListView, TranDetailView,  BuyumUsersCreateListView,  ShRCreateListView, YangiliklarCreateListView, TalablarCreateListView, VABCreateListView, VABDetailView, PriceCreateListView, PriceDetailView, TaskUsersDetailView, TaskUsersListView, DoneTasksListView, BallsTasksCreateListView, BallsTasksDetailView, AuktsionCreateListView, AuktsionDetailView, TasksCreateListView, TasksDetailView, HistoryBallsCreateListView, HistoryBallsDetailView, BuyumCreateListView, BuyumDetailView, ShRDetailView, YangiliklarDetailView, TalablarDetailView, BuyumUsersDetailView
 
 urlpatterns = [
     path('auktsion', AuktsionCreateListView.as_view()),
@@ -27,4 +27,8 @@ urlpatterns = [
     path('Shrivoj/<int:pk>', ShRDetailView.as_view()),
     path('yangiliklar/<int:pk>', YangiliklarDetailView.as_view()),
     path('talablar/<int:pk>', TalablarDetailView.as_view()),
-    ]
+    path('buyumusers', BuyumUsersCreateListView.as_view()),
+    path('buyumusers/<int:pk>', BuyumUsersDetailView.as_view()),
+    path('tranzaksiya', TranCreateListView.as_view()),
+    path('tranzaksiya/<int:pk>', TranDetailView.as_view()),   
+ ]

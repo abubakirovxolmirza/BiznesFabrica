@@ -68,6 +68,7 @@ class RoleUser(models.Model):
     role_edit = models.BooleanField(default=False)
     role_delete = models.BooleanField(default=False)
 
+ 
 class CustomUser(AbstractUser):
     STATUS_CHOICES = [
         ('Asked', 'Asked'),
@@ -94,7 +95,7 @@ class CustomUser(AbstractUser):
     tasks = models.ForeignKey(Tasks, on_delete=models.CASCADE, blank=True, null=True)
     reyting = models.FloatField(blank=True, null=True)
     status = models.CharField(max_length=50, choices=STATUS_CHOICES, blank=True, null=True)
-    role = models.ForeignKey(RoleUser, on_delete=models.CASCADE, blank=True, null=True)
+    role = models.ForeignKey(RoleUser, on_delete=models.CASCADE, blank=True, null=True, default=None)
     group_id = models.ForeignKey('Group', on_delete=models.CASCADE, blank=True, null=True)
     permission = models.CharField(max_length=70, blank=True, null=True)
     history_tasks = models.CharField(max_length=50, blank=True, null=True)
@@ -104,9 +105,14 @@ class CustomUser(AbstractUser):
     REQUIRED_FIELDS = []
 
     objects = CustomUserManager()
-        
-    def get_role(self)-> str:
-        return self.role
+    def save(self, *args, **kwargs):
+        if not self.role:
+            soldat_role, created = RoleUser.objects.get_or_create(role='Soldat')
+            self.role = soldat_role
+        super().save(*args, **kwargs)
+
+    def get_role(self) -> int:
+        return self.role.role if self.role else None   
     
     # def __str__(self):
     #     return self.tasks
