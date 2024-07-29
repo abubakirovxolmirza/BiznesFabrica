@@ -2,7 +2,9 @@
 from django.urls import re_path
 from . import consumers
 from armiya import consumer
+from chat.consumers import ChatConsumer
 websocket_urlpatterns = [
+    re_path(r'ws/chat/(?P<task_id>\d+)/$', ChatConsumer.as_asgi()),
     re_path(r'ws/yangiliklar/$', consumer.YangiliklarConsumer.as_asgi()),
     re_path(r'ws/tranzaksiya/$', consumer.TranzaksiyaConsumer.as_asgi()),
     re_path(r'ws/talablar/$', consumer.TalablarConsumer.as_asgi()),

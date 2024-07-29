@@ -57,18 +57,23 @@ from .serializers import CustomUserSerializer
 
 class VerifyEmailView(APIView):
     def post(self, request):
+        email = request.data.get('email')
         code = request.data.get('code')
+        
+        if not email or not code:
+            return Response({'detail': 'Email and code are required'}, status=status.HTTP_400_BAD_REQUEST)
+        
         try:
-            verification = EmailVerification.objects.get(code=code)
+            verification = EmailVerification.objects.get(user__email=email, code=code)
         except EmailVerification.DoesNotExist:
-            return Response({'detail': 'Invalid verification code'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'detail': 'Invalid email or verification code'}, status=status.HTTP_400_BAD_REQUEST)
         
         if verification.is_expired():
             return Response({'detail': 'Verification code has expired'}, status=status.HTTP_400_BAD_REQUEST)
         
         verification.mark_as_verified()
         user = verification.user
-        user.is_active = True  # Можно активировать пользователя здесь
+        user.is_active = True  # Activate the user here
         user.save()
 
         return Response({'detail': 'Email successfully verified'}, status=status.HTTP_200_OK)
