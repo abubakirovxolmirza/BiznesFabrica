@@ -56,7 +56,7 @@ INSTALLED_APPS = [
     'storages',
     'notifications.apps.NotificationsConfig'
 ]
-ASGI_APPLICATION = 'core.asgi.application'
+ASGI_APPLICATION = 'core.settings'
 
 CHANNEL_LAYERS = {
     'default': {
