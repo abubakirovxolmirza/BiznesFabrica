@@ -3,8 +3,9 @@ from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 # from users.models import CustomUser
 # Create your models here.
+from ckeditor_uploader.fields import RichTextUploadingField
 
-from ckeditor_uploader.fields import RichTextUploadingField    
+
 class Yangiliklar(models.Model):
     content = RichTextUploadingField()
     user_id = models.JSONField(default=list)
@@ -16,6 +17,7 @@ class Tranzaksiya(models.Model):
     vab = models.FloatField()
 
 class Talablar(models.Model):
+    task_id = models.ForeignKey('Tasks', on_delete=models.CASCADE)
     create_date = models.DateTimeField(auto_now_add=True)
     mavzu = models.CharField(max_length=255)
     content = RichTextUploadingField()
@@ -29,12 +31,17 @@ class Price(models.Model):
     sumq = models.FloatField()
 
 class VAB(models.Model):
+    KEY_CHOICES = [
+        ('DAILY', 'DAILY'),
+        ('MONTHLY', 'MONTHLY'),
+        ('YEARLY', 'YEARLY'),
+    ]
     date = models.DateTimeField()
     qiymat = models.FloatField()
     history = models.JSONField()
-    class Meta:
-        ordering = ['-date']
-
+    title = models.CharField(max_length=300)
+    key = models.CharField(max_length=30, choices=KEY_CHOICES)  
+    is_check = models.BooleanField(default=False)
 
 class Tasks(models.Model):
     STATUS_CHOICES = [
@@ -44,11 +51,9 @@ class Tasks(models.Model):
     ]
     name = models.CharField(max_length=250)
     definition = models.CharField(max_length=250)
-    start_time = models.DateTimeField()
-    stop_time = models.DateTimeField()
-    #users = models.ManyToManyField('users.CustomUser', related_name='army_tasks')
+    start_time = models.DateTimeField(blank=True, null=True)
+    stop_time = models.DateTimeField(blank=True, null=True)
     status = models.CharField(max_length=200, choices=STATUS_CHOICES)
-    #ball = models.JSONField(default=dict)  # Stores user scores as a JSON object
     user = models.JSONField(default=list)
 
     def set_score(self, user_id, ball):
@@ -102,6 +107,7 @@ class Buyum(models.Model):
     buyumusers = models.ForeignKey('BuyumUsers', on_delete=models.CASCADE, blank=True, null=True)
 
 class Auktsion(models.Model):
+    vab_id = models.ForeignKey(VAB, on_delete=models.CASCADE, related_name='vab_auktsion')
     name = models.CharField(max_length=250)
     kuni = models.DateTimeField()
     yutganlar = models.CharField(max_length=100, blank=True, null=True)
@@ -109,5 +115,6 @@ class Auktsion(models.Model):
 
 
 class BuyumUsers(models.Model):
+    buyum_id = models.ForeignKey(Buyum, on_delete=models.CASCADE, related_name='buyum_user_id')
     user_id = models.ForeignKey('users.CustomUser', on_delete=models.CASCADE)
     vab = models.IntegerField(blank=True, null=True)

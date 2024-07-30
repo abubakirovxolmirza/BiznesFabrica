@@ -18,5 +18,5 @@ websocket_urlpatterns = [
     re_path(r'ws/buyum/$', consumer.BuyumConsumer.as_asgi()),
     re_path(r'ws/auktsion/$', consumer.AuktsionConsumer.as_asgi()),
     re_path(r'ws/buyum_users/$', consumer.BuyumUsersConsumer.as_asgi()),    
-    re_path(r'ws/notifications/$', consumers.NotificationConsumer.as_asgi()),
+    # re_path(r'ws/notifications/$', consumers.NotificationConsumer.as_asgi()),
 ]

@@ -1,7 +1,8 @@
 from django.urls import path
-from .views import TranCreateListView, TranDetailView,  BuyumUsersCreateListView,  ShRCreateListView, YangiliklarCreateListView, TalablarCreateListView, VABCreateListView, VABDetailView, PriceCreateListView, PriceDetailView, TaskUsersDetailView, TaskUsersListView, DoneTasksListView, BallsTasksCreateListView, BallsTasksDetailView, AuktsionCreateListView, AuktsionDetailView, TasksCreateListView, TasksDetailView, HistoryBallsCreateListView, HistoryBallsDetailView, BuyumCreateListView, BuyumDetailView, ShRDetailView, YangiliklarDetailView, TalablarDetailView, BuyumUsersDetailView
+from .views import VABListView, TranCreateListView, TranDetailView,  BuyumUsersCreateListView,  ShRCreateListView, YangiliklarCreateListView, TalablarCreateListView, VABCreateListView, VABDetailView, PriceCreateListView, PriceDetailView, TaskUsersDetailView, TaskUsersListView, DoneTasksListView, BallsTasksCreateListView, BallsTasksDetailView, AuktsionCreateListView, AuktsionDetailView, TasksCreateListView, TasksDetailView, HistoryBallsCreateListView, HistoryBallsDetailView, BuyumCreateListView, BuyumDetailView, ShRDetailView, YangiliklarDetailView, TalablarDetailView, BuyumUsersDetailView
 
 urlpatterns = [
+    path('vabkey', VABListView.as_view()),
     path('auktsion', AuktsionCreateListView.as_view()),
     path('balls', BallsTasksCreateListView.as_view()),
     path('tasks', TasksCreateListView.as_view()),

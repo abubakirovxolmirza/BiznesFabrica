@@ -7,6 +7,18 @@ from users.models import CustomUser
 from users.serializers import CustomUserSerializer
 from rest_framework.response import Response
 # Create your views here.
+from rest_framework import generics
+from .models import VAB
+from .serializers import VABSeralizers
+
+class VABListView(generics.ListAPIView):
+    serializer_class = VABSeralizers
+
+    def get_queryset(self):
+        key = self.request.query_params.get('key')
+        if key:
+            return VAB.objects.filter(key=key)
+        return VAB.objects.all()
 
 
 class TalablarCreateListView(ListCreateAPIView):
